@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>HTML5 gamepad</title>
+  <meta name="viewport" content="width=1024">
+
+        <link rel="stylesheet" href="dist/coderdeck-core.min.css" type="text/css">
+  <link rel="stylesheet" id='style-theme-link' href="dist/coderdeck.css" type="text/css" >
+
+  <script src='dist/jquery.min.js'></script>
+  <script src="dist/modernizr.js"></script>
+</head>
+<body class="deck-container">
+
+<script type='text/coderdeck' id='coderdeck-default'>
+  <html>
+    <head>
+      <script src='dist/jquery.min.js'>SCRIPTEND
+      <script src='gamepad.js'>SCRIPTEND
+    </head>
+    <body>
+      CODE
+    </body>
+</html>
+</script>
+
+
+<script type='text/coderdeck' id='coderdeck-style-example'>
+  <html>
+    <title>test</title>
+    <style>
+      CODE
+    </style>
+    <body>
+      <h1>I'm a H1 heading</h1>
+      <h2>I'm a H2 heading</h2>
+      <p>Pargraph of text &lt;p&gt; here</p>
+      <div class='stuff'>I'm a div &lt;div&gt; with class "stuff"</div>
+      <div id='my-div'>I'm a &lt;div&gt; with id "my-div"</div>
+    </body>
+  </html>
+</script>   
+
+<article class='slide slide-subhead'>
+<h1>gamepad API</h1>
+<h2>"Defines a low-level interface that represents gamepad devices in the browser." --W3C
+</h2>
+</article>
+
+<article class='slide slide-list'>
+<h2>Can I use it now?</h2>
+<p>The gamepad API is <a href="http://dvcs.w3.org/hg/gamepad/raw-file/default/gamepad.html">a W3C draft</a>.</p>
+<p>Currently only Chrome and Firefox have implementations.</p>
+<p>Chrome requires you to enable it on the <a href="chrome://flags">chrome://flags</a> page.</p>
+<p>Firefox requires a special build found <a href="https://wiki.mozilla.org/GamepadAPI#Obtaining_Builds">here</a>.
+</article>
+
+<!-- Apply a class of "coder-editor" to a textarea to make it show up as runnable code -->
+<article class='slide slide-list'>
+<h2>How low can you go?</h2>
+<p>The API is low-level.</p>
+<p>There are no events. It relies on you polling the system for gamepad state changes.</p>
+<textarea class='coder-editor coder-editor-full'>
+<div id="output"></div>
+<script>
+function repeat() {
+  window.webkitRequestAnimationFrame(repeat);
+  var gamepads = navigator.webkitGamepads;
+  $log = $('#output').text('');
+  for (var i in gamepads[0].axes) {
+    $log.append(gamepads[0].axes[i])
+      .append('<br>');
+  }
+}
+window.webkitRequestAnimationFrame(repeat);
+</script></textarea>
+</article>
+
+
+<article class='slide slide-list'>
+<h2>Don't like limbo?</h2>
+<p><a href="http://www.gamepadjs.com/">gamepad.js</a> offers a wrapper for the low-level API.</p>
+<p>Abstracts out vender prefixes (webkit, moz, etc.) and creates a common mapping for controller buttons and axes.</p>
+<textarea class='coder-editor coder-editor-full'>
+<div id="output"></div>
+<script>
+function repeat() {
+  window.webkitRequestAnimationFrame(repeat);
+  var gamepads = Gamepad.getStates();
+  $('#output').text('')
+    .append(gamepads[0].leftStickX).append('<br>')
+    .append(gamepads[0].leftStickY).append('<br>')
+    .append(gamepads[0].rightStickX).append('<br>')
+    .append(gamepads[0].rightStickY).append('<br>');
+}
+window.webkitRequestAnimationFrame(repeat);
+</script></textarea>
+
+</article>
+
+
+<!-- Apply a class of "coder-editor-full" along with "coder-editor" to a textarea to make it show up as runnable code -->
+<article class='slide slide-list'>
+<h2>Why?</h2>
+<p>Gamepads are ubiquitous with video games.</p>
+<p>With WebGL and Canvas2D, video games with JS and HTML are ready for the front stage.</p>
+<p>Controlling websites with navigators and remotes is also possible now.</p>
+</article>
+
+<!-- use a class of gist and a data-gist-id to pull the code example from a gist -->
+<article class='slide slide-list'>
+<h2>Links</h2>
+<br>
+<ul>
+  <li>This presentation - <a href="https://dannyfritz.github.com/JS-gamepad-API-lightning-talk">https://dannyfritz.github.com/JS-gamepad-API-lightning-talk</a></li>
+  <br>
+  <li>W3C Working Draft - <a href="http://dvcs.w3.org/hg/gamepad/raw-file/default/gamepad.html#introduction">http://dvcs.w3.org/hg/gamepad/raw-file/default/gamepad.html</a></li>
+  <li>gamepad.js - <a href="http://www.gamepadjs.com/">http://www.gamepadjs.com/</a></li>
+  <li>MozillaWiki GamepadAPI - <a href="https://wiki.mozilla.org/GamepadAPI">https://wiki.mozilla.org/GamepadAPI</a></li>
+  <li>Jumping the Hurdles with Gamepad API - <a href="http://www.html5rocks.com/en/tutorials/doodles/gamepad/">http://www.html5rocks.com/en/tutorials/doodles/gamepad/</a></li>
+</ul>
+</article>
+
+<script src='dist/coderdeck.min.js'></script>
+
+<script>
+  $(function() {
+    $.deck('.slide');
+  });
+</script>
+</body>
+</html>
